@@ -1093,21 +1093,23 @@ platform data. To mitigate this:</p>
 <h2 id="rejected-ideas">Rejected Ideas<a class="headerlink" href="#rejected-ideas" title="Permanent link">&para;</a></h2>
 <p>Several alternative approaches were considered and ultimately rejected:</p>
 <ol>
-<li><strong>Explicit Package Naming (<code>mypackage-gpu</code>, <code>mypackage-cpu</code>)</strong></li>
 <li>
-<p>Leads to dependency resolution issues and combinatorial explosion of package variants.</p>
+<p><strong>Explicit Package Naming (<code>mypackage-gpu</code>, <code>mypackage-cpu</code>)</strong></p>
+<ul>
+<li>Leads to dependency resolution issues and combinatorial explosion of package variants.</li>
+</ul>
 </li>
 <li>
 <p><strong>Bundling All Dependencies into a Single Wheel</strong></p>
-</li>
-<li>
-<p>Results in unnecessarily large downloads and inefficiencies.</p>
+<ul>
+<li>Results in unnecessarily large downloads and inefficiencies.</li>
+</ul>
 </li>
 <li>
 <p><strong>Modifying <code>pip</code> Internals Directly</strong></p>
-</li>
-<li>
-<p>Would impose significant maintenance burden on <code>pip</code> maintainers and slow adaptation to new hardware platforms.</p>
+<ul>
+<li>Would impose significant maintenance burden on <code>pip</code> maintainers and slow adaptation to new hardware platforms.</li>
+</ul>
 </li>
 <li>
 <p><strong>One index per configuration</strong></p>
@@ -1120,22 +1122,24 @@ platform data. To mitigate this:</p>
 <p><img alt="pytorch selector" src="../../assets/images/pytorch_variant_selector.webp" /></p>
 <h2 id="open-issues">Open Issues<a class="headerlink" href="#open-issues" title="Permanent link">&para;</a></h2>
 <ol>
-<li><strong>Dependency Management</strong></li>
 <li>
-<p>How should dependencies be expressed when a package depends on a variant of another package?</p>
+<p><strong>Dependency Management</strong></p>
+<ul>
+<li>How should dependencies be expressed when a package depends on a variant of another package?</li>
+</ul>
 </li>
 <li>
 <p><strong>Lockfile Support</strong></p>
-</li>
-<li>
-<p>Should lockfiles store variant hashes or remain variant-agnostic?</p>
+<ul>
+<li>Should lockfiles store variant hashes or remain variant-agnostic?</li>
+</ul>
 </li>
 <li>
 <p><strong>Platform Detection Edge Cases</strong></p>
-</li>
+<ul>
 <li>How should plugins handle ambiguous or incomplete hardware information?</li>
-<li>
-<p>Probably should stay up to the plugin maintainer to decide.</p>
+<li>Probably should stay up to the plugin maintainer to decide.</li>
+</ul>
 </li>
 <li>
 <p><strong>How to maintain a source-of-truth</strong></p>
