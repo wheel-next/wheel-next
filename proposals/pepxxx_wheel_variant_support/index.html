@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.4">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.5">
     
     
       
@@ -558,6 +558,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Rationale">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#user-stories" class="md-nav__link">
+    <span class="md-ellipsis">
+      User Stories
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -566,6 +581,39 @@
       Specification
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Specification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wheel-variants" class="md-nav__link">
+    <span class="md-ellipsis">
+      Wheel Variants
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#provider-plugins" class="md-nav__link">
+    <span class="md-ellipsis">
+      Provider Plugins
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#integration-with-installers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Integration with installers
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -590,7 +638,7 @@
         <li class="md-nav__item">
   <a href="#how-to-teach-this" class="md-nav__link">
     <span class="md-ellipsis">
-      How to teach this
+      How to Teach This
     </span>
   </a>
   
@@ -617,7 +665,16 @@
         <li class="md-nav__item">
   <a href="#open-issues" class="md-nav__link">
     <span class="md-ellipsis">
-      Open issues
+      Open Issues
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusion
     </span>
   </a>
   
@@ -711,6 +768,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Rationale">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#user-stories" class="md-nav__link">
+    <span class="md-ellipsis">
+      User Stories
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -719,6 +791,39 @@
       Specification
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Specification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wheel-variants" class="md-nav__link">
+    <span class="md-ellipsis">
+      Wheel Variants
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#provider-plugins" class="md-nav__link">
+    <span class="md-ellipsis">
+      Provider Plugins
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#integration-with-installers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Integration with installers
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -743,7 +848,7 @@
         <li class="md-nav__item">
   <a href="#how-to-teach-this" class="md-nav__link">
     <span class="md-ellipsis">
-      How to teach this
+      How to Teach This
     </span>
   </a>
   
@@ -770,7 +875,16 @@
         <li class="md-nav__item">
   <a href="#open-issues" class="md-nav__link">
     <span class="md-ellipsis">
-      Open issues
+      Open Issues
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusion
     </span>
   </a>
   
@@ -819,24 +933,221 @@
 </tbody>
 </table>
 <h2 id="abstract">Abstract<a class="headerlink" href="#abstract" title="Permanent link">&para;</a></h2>
-<h2 id="motivation">Motivation<a class="headerlink" href="#motivation" title="Permanent link">&para;</a></h2>
-<h2 id="rationale">Rationale<a class="headerlink" href="#rationale" title="Permanent link">&para;</a></h2>
-<p>Variants user stories:</p>
+<p>This PEP proposes an evolution of Python Wheels standard to support hardware-specific or platform-dependent package variants.
+Current mechanisms for distinguishing Python Wheels (i.e Python ABI version, OS, CPU architecture, and Build ID) are
+insufficient for modern hardware diversity, particularly for environments requiring specialized dependencies such as
+high performance computing, accelerated computing (GPU, FPGA, ASIC, etc.), etc.</p>
+<p>This proposal introduces <code>Wheel Variants</code>, a mechanism for publish platform-dependant wheels and selecting the most suitable
+package variant for a given platform.</p>
+<p>To enable fine-grained package selection without fragmenting the Python ecosystem, this PEP proposes:</p>
 <ul>
-<li>A user wants to install a version of NumPy that is accelerated for their CPU architecture</li>
-<li>A user wants to install a version of PyTorch that is accelerated for their GPU architecture</li>
-<li>A user wants to install a version of mpi4py that has certain features enabled (e.g. specific MPI implementations for their hardware)</li>
-<li>A library maintainer wants to build their library for wasm32-wasi with and without pthreads support</li>
-<li>A library maintainer wants to build their library for an Emscripten platform for Pyodide with extensions for graphics compiled in</li>
-<li>A library maintainer wants to provide packages of their game library using different graphics backends</li>
+<li>
+<p>A <code>Wheel Variant</code> system that enables multiple wheels for the same Python package version, distinguished by
+hardware-specific attributes.</p>
+</li>
+<li>
+<p>A <code>Provider Plugin</code> system that dynamically detects platform attributes and recommends the most suitable wheel.</p>
+</li>
+<li>
+<p>A hash-based identification mechanism for wheel variants, ensuring compatibility while maintaining clarity in package naming.</p>
+</li>
+</ul>
+<p>This approach allows seamless package resolution without requiring intrusive changes to <code>installers</code>, ensures backward
+compatibility, and minimizes the burden on package maintainers.</p>
+<h2 id="motivation">Motivation<a class="headerlink" href="#motivation" title="Permanent link">&para;</a></h2>
+<p>Existing approaches to handling platform-specific Python packages are suboptimal. Some methods include maintaining
+separate package indexes for different hardware configurations, bundling all potential dependencies into a single
+"mega-wheel," or creating separate package names (<code>mypackage-gpu</code>, <code>mypackage-cpu</code>). Each of these approaches has
+significant drawbacks, such as excessive binary size, dependency confusion, and inefficient dependency resolution, etc.</p>
+<p>The need for a systematic and scalable approach to selecting optimized wheels based on platform characteristics has
+become increasingly urgent as Python usage expands across diverse computing environments, from cloud computing to
+embedded systems and AI accelerators.</p>
+<h2 id="rationale">Rationale<a class="headerlink" href="#rationale" title="Permanent link">&para;</a></h2>
+<h3 id="user-stories">User Stories<a class="headerlink" href="#user-stories" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p>A user wants to install a version of NumPy that is accelerated for their CPU architecture.</p>
+</li>
+<li>
+<p>A user wants to install a version of PyTorch that is accelerated for their GPU architecture.</p>
+</li>
+<li>
+<p>A user wants to install a version of mpi4py that has certain features enabled (e.g. specific MPI implementations for
+their hardware).</p>
+</li>
+<li>
+<p>A library maintainer wants to build their library for wasm32-wasi with and without pthreads support.</p>
+</li>
+<li>
+<p>A library maintainer wants to build their library for an Emscripten platform for Pyodide with extensions for graphics
+compiled in.</p>
+</li>
+<li>
+<p>A library maintainer wants to provide packages of their game library using different graphics backends.</p>
+</li>
+<li>
+<p>Manylinux standard doesn’t cover all use-cases: <a href="https://github.com/pypa/manylinux/issues/1725">github.com/pypa/manylinux/issues/1725</a></p>
+</li>
 </ul>
 <h2 id="specification">Specification<a class="headerlink" href="#specification" title="Permanent link">&para;</a></h2>
+<h3 id="wheel-variants">Wheel Variants<a class="headerlink" href="#wheel-variants" title="Permanent link">&para;</a></h3>
+<p>A <code>Wheel Variant</code> is a Python Wheel designed to support a specific platform configuration. Wheel Variants will
+follow an extended filename pattern, incorporating an additional hash to indicate a specific variant:</p>
+<div class="highlight"><pre><span></span><code>mypackage-0.0.1~abcd1234-py3-none-any.whl
+</code></pre></div>
+<p>This <code>~abcd1234</code> hash is computed based on platform attributes detected by the user-installed <code>provider plugins</code> and
+aggregated by <code>variantlib</code>, ensuring uniqueness and scalability while maintaining compatibility with existing tooling.
+The <code>variantlib</code> library will generate these hashes using <code>hashlib.shake_128()</code>, providing a lightweight and
+deterministic method of identifying platform-specific variants.</p>
+<h3 id="provider-plugins">Provider Plugins<a class="headerlink" href="#provider-plugins" title="Permanent link">&para;</a></h3>
+<p>A <code>Provider Plugin</code> detects the characteristics of the host platform and provides relevant metadata to <code>variantlib</code>.
+Each plugin must implement a standard entry point:</p>
+<div class="highlight"><pre><span></span><code><span class="k">[project.entry-points.</span><span class="s2">&quot;variantlib.plugins&quot;</span><span class="k">]</span>
+<span class="n">my_plugin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;my_plugin.plugin:MyVariantPlugin&quot;</span>
+</code></pre></div>
+<p>The plugin itself follows a minimal interface:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">variantlib.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">ProviderConfig</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">my_plugin</span><span class="w"> </span><span class="kn">import</span> <span class="n">__version__</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">MyVariantPlugin</span><span class="p">:</span>
+    <span class="n">__provider_name__</span> <span class="o">=</span> <span class="s2">&quot;my_plugin&quot;</span>
+    <span class="n">__version__</span> <span class="o">=</span> <span class="n">__version__</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ProviderConfig</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Detects platform attributes and returns a ProviderConfig if applicable.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+</code></pre></div>
+<h3 id="integration-with-installers">Integration with <code>installers</code><a class="headerlink" href="#integration-with-installers" title="Permanent link">&para;</a></h3>
+<p>Upon package installation, <code>pip/uv/etc.</code> will:</p>
+<ol>
+<li>
+<p>Query <code>variantlib</code> for installed <code>Provider Plugins</code>.</p>
+</li>
+<li>
+<p>Generate a list of possible variant hashes based on detected attributes.</p>
+</li>
+<li>
+<p>Search package repositories for matching wheels.</p>
+</li>
+<li>
+<p>Select the most relevant variant based on predefined priority rules.</p>
+</li>
+<li>
+<p>Install the selected wheel, or fall back to a generic version if no variant is found.</p>
+</li>
+<li>
+<p>Users must have control over which plugins are active, with the ability to disable or prioritize them via <code>pip.conf</code>
+or <code>variant.conf</code>.</p>
+</li>
+<li>
+<p>A <code>[uv] pip install --no-variant package</code> option should be available to force installation of generic wheels.</p>
+</li>
+<li>
+<p>A <code>[uv] pip install --variant=abcd1234 package</code> option should be available to force installation of generic wheels.</p>
+</li>
+<li>
+<p>Platform detection can be expensive, it must be cache-able. The following caching policy might be a good start [ultimately up to the tool]</p>
+<ul>
+<li>Run once and cache</li>
+<li>Void at restart</li>
+<li>Void at plugin update</li>
+<li>Void manually: <code>[uv] pip cache --void variant_cache</code></li>
+</ul>
+</li>
+</ol>
 <h2 id="backward-compatibility">Backward Compatibility<a class="headerlink" href="#backward-compatibility" title="Permanent link">&para;</a></h2>
+<p>The introduction of <code>Wheel Variants</code> does not break existing <code>installer</code> [<code>pip/uv/etc.</code>] versions, as older versions
+will simply ignore variant wheels. This is ensured by modifying the standard wheel filename regex ensures that legacy
+<code>pip</code> versions do not mistakenly install incompatible variants.</p>
 <h2 id="security-implications">Security Implications<a class="headerlink" href="#security-implications" title="Permanent link">&para;</a></h2>
-<h2 id="how-to-teach-this">How to teach this<a class="headerlink" href="#how-to-teach-this" title="Permanent link">&para;</a></h2>
+<p>The <code>Provider Plugin</code> mechanism introduces potential security risks, such as untrusted plugins providing misleading
+platform data. To mitigate this:</p>
+<ul>
+<li>Plugins should be sourced from trusted repositories. It's essentially remote code execution at install time.</li>
+</ul>
+<h2 id="how-to-teach-this">How to Teach This<a class="headerlink" href="#how-to-teach-this" title="Permanent link">&para;</a></h2>
+<p>User documentation will be updated to:</p>
+<ul>
+<li>Explain the concept of <code>Wheel Variants</code> and how they improve package selection.</li>
+<li>Provide guidance on writing and publishing <code>Provider Plugins</code>.</li>
+<li>Detail configuration options, such as overriding variant selection or disabling the feature entirely.</li>
+<li>Include debugging instructions for users encountering unexpected behavior.</li>
+</ul>
 <h2 id="reference-implementation">Reference Implementation<a class="headerlink" href="#reference-implementation" title="Permanent link">&para;</a></h2>
+<p>A prototype implementation has been developed, demonstrating:</p>
+<ul>
+<li>
+<p><code>variantlib</code>, the library handling plugin registration and variant selection.</p>
+</li>
+<li>
+<p>Demo <code>Provider Plugins</code> capable of detecting <code>fictional  hardware</code> and <code>fictional technology</code></p>
+</li>
+<li>
+<p>A modified version of <code>pip</code> integrating variant-aware package resolution.</p>
+</li>
+</ul>
 <h2 id="rejected-ideas">Rejected Ideas<a class="headerlink" href="#rejected-ideas" title="Permanent link">&para;</a></h2>
-<h2 id="open-issues">Open issues<a class="headerlink" href="#open-issues" title="Permanent link">&para;</a></h2>
+<p>Several alternative approaches were considered and ultimately rejected:</p>
+<ol>
+<li><strong>Explicit Package Naming (<code>mypackage-gpu</code>, <code>mypackage-cpu</code>)</strong></li>
+<li>
+<p>Leads to dependency resolution issues and combinatorial explosion of package variants.</p>
+</li>
+<li>
+<p><strong>Bundling All Dependencies into a Single Wheel</strong></p>
+</li>
+<li>
+<p>Results in unnecessarily large downloads and inefficiencies.</p>
+</li>
+<li>
+<p><strong>Modifying <code>pip</code> Internals Directly</strong></p>
+</li>
+<li>
+<p>Would impose significant maintenance burden on <code>pip</code> maintainers and slow adaptation to new hardware platforms.</p>
+</li>
+<li>
+<p><strong>One index per configuration</strong></p>
+<ul>
+<li>Significant user complexity. Force the user to carefully read the documentation.</li>
+<li>Totally breaks the dependency tree: <code>transformers =&gt; pytorch</code></li>
+</ul>
+</li>
+</ol>
+<p><img alt="pytorch selector" src="../../assets/images/pytorch_variant_selector.webp" /></p>
+<h2 id="open-issues">Open Issues<a class="headerlink" href="#open-issues" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Dependency Management</strong></li>
+<li>
+<p>How should dependencies be expressed when a package depends on a variant of another package?</p>
+</li>
+<li>
+<p><strong>Lockfile Support</strong></p>
+</li>
+<li>
+<p>Should lockfiles store variant hashes or remain variant-agnostic?</p>
+</li>
+<li>
+<p><strong>Platform Detection Edge Cases</strong></p>
+</li>
+<li>How should plugins handle ambiguous or incomplete hardware information?</li>
+<li>
+<p>Probably should stay up to the plugin maintainer to decide.</p>
+</li>
+<li>
+<p><strong>How to maintain a source-of-truth</strong></p>
+<ul>
+<li>Everybody who build CUDA-accelerated Wheel Variants need to use <strong>exactly</strong> the metadata that will
+be provided to installers.</li>
+<li>Same logic for CPU, every <code>AVX512</code> accelerated package need to highlight that feature in the exact same way.</li>
+<li>Shall we have a package like <code>troveclassifiers</code> to act as a "source of truth" ?</li>
+</ul>
+</li>
+</ol>
+<h2 id="conclusion">Conclusion<a class="headerlink" href="#conclusion" title="Permanent link">&para;</a></h2>
+<p>This proposal outlines a scalable and backward-compatible solution for platform-specific Python Wheel distribution.
+By leveraging <code>Wheel Variants</code> and <code>Provider Plugins</code>, this mechanism simplifies package installation for users while
+maintaining efficiency for package maintainers and repository hosts.</p>
 
 
 
@@ -859,7 +1170,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">February 18, 2025</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">February 20, 2025</span>
   </span>
 
     
